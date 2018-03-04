@@ -1,5 +1,3 @@
-/* eslint-disable strict */
-
 'use strict';
 
 const express = require('express');
@@ -158,7 +156,7 @@ function getSuggestions(term, res) {
 const app = express();
 app.use(cors());
 
-app.get('/eestikelt', (req, res) => {
+app.get('/eestikeelt', (req, res) => {
   const term = req.query.term;
   if (typeof term !== 'undefined') {
     getSuggestions(term.toLowerCase(), res);
@@ -167,4 +165,4 @@ app.get('/eestikelt', (req, res) => {
   }
 });
 
-app.listen(8030, () => console.log('Example app listening on port 8030!'));
+app.listen(process.env.PORT || 80, () => console.log(`app is listening on port ${process.env.PORT } or 80!`));

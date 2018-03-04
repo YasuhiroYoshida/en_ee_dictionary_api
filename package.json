@@ -1,6 +1,6 @@
 {
-  "name": "English-Estonian_Dictionary",
-  "version": "1.0.0",
+  "name": "English-Estonian_Dictionary_API",
+  "version": "0.1.0",
   "description": "English-Estonian Dictionary Backend",
   "private": true,
   "author": "Yasuhiro Yoshida",
@@ -8,6 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/YasuhiroYoshida/en-ee-dictionary-api.git"
+  },
+  "engines": {
+    "node": "9.7.1"
   },
   "main": "index.js",
   "scripts": {
