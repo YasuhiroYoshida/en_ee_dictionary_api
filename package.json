@@ -1,0 +1,33 @@
+{
+  "name": "English-Estonian_Dictionary",
+  "version": "1.0.0",
+  "description": "English-Estonian Dictionary Backend",
+  "private": true,
+  "author": "Yasuhiro Yoshida",
+  "license": "GNU General Public License v3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YasuhiroYoshida/en-ee-dictionary-api.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js --exec babel-node --presets env,stage-2",
+    "build": "babel index.js --out-dir build"
+  },
+  "dependencies": {
+    "async": "^2.0.1",
+    "cheerio": "^0.20.0",
+    "cors": "^2.8.0",
+    "express": "^4.14.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0"
+  }
+}
