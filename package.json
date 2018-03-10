@@ -9,9 +9,6 @@
     "type": "git",
     "url": "https://github.com/YasuhiroYoshida/en-ee-dictionary-api.git"
   },
-  "engines": {
-    "node": "9.7.1"
-  },
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets env,stage-2",
