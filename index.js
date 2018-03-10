@@ -165,4 +165,4 @@ app.get('/eestikeelt', (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 80, () => console.log(`app is listening on port ${process.env.PORT } or 80!`));
+app.listen(process.env.PORT);
