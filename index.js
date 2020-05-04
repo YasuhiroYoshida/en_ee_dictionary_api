@@ -6,8 +6,9 @@ const cheerio = require('cheerio');
 const async = require('async');
 const cors = require('cors');
 
-// Parse the help page of the dictionary every time.
+// Parse the help page of the dictionary every time the frontend sends a request.
 // The page gives also annotations explanation for each rule.
+// The page has a table structure with a number of rows.
 function setupHelp(help) {
   request('http://www.eki.ee/dict/qs/muuttyybid.html', (error, response, body) => {
     if (!error && response.statusCode === 200) {
@@ -37,19 +38,20 @@ function setupHelp(help) {
 const help = {};
 setupHelp(help);
 
-// Parse the HTML of the complete defition of the Estonian term
+// Parse the definition page of the Estonian word
+// - returns the definitions and Rule numbers
 function parseCompleteEST(html, estTerm) {
   const $ = cheerio.load(html);
 
-  // Some special treatment because when looking for 'car' => 'auto',
-  // there was some problem when choosing the last of $('.tervikart').
-  // Thus, we filter out rubish terms that are the same as the terms,
-  // but have a '+' in the end.
+  // Inside .tervikart element, there can be words ending with a "+"
+  // Such word is eliminated here
   const tervikart = $('.tervikart').filter((i, x) => {
     return !$(x).text().trim().startsWith(`${estTerm}+`);
   });
 
+  // notes is actually a single element
   const notes = tervikart.last().find('.grg .mvq').text();
+  // numbers here correspond to a Rule number listed on the help page
   const numbersAsString = tervikart.last().find('.grg .mt').text();
   const re = /\d+[a-z]?/ig;
   const numbers = numbersAsString.match(re);
@@ -87,7 +89,7 @@ function fetchCompleteEST(term, done) {
 }
 
 // After retrieving the body, parse for all the Estonian terms (to the orignal English term)
-// NB: For some English term, several Estonian terms exists
+// For a English word, several Estonian words can exist
 function parseENtoEST(html, englTerm, done) {
   const $ = cheerio.load(html);
   const terms = [];
@@ -124,7 +126,7 @@ function fetchENtoEST(englTerm, done) {
   });
 }
 
-// From the starting term, get 5 suggestions (similar words) and proeed
+// 5 suggestions are returned
 function getSuggestions(term, res) {
   const url = `http://www.eki.ee/dict/shs_soovita.cgi?D=ies&F=M&term=${encodeURI(term)}`;
   request(url, (error, response, body) => {
@@ -136,9 +138,11 @@ function getSuggestions(term, res) {
         return s;
       });
 
+      // if suggestions include the search word, it will be prepended to suggestions
       if (suggestions.indexOf(term) === -1) {
         suggestions = [term].concat(suggestions);
       }
+      // if suggestions end up being a 6-element array, the last one will be chopped off
       suggestions = suggestions.slice(0, 5);
 
       async.map(suggestions, fetchENtoEST, (error2, result) => {
