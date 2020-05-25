@@ -1,4 +1,4 @@
-# English-Estonian Dictionary API
+# English-Estonian Dictionary API - RETIRED
 
 This is a dictionary that translates an English word into an Estonian one and provides the first three cases, namely **normative**, **genitive**, and **accusative**, which are considered to be the most basic and important among the fourteen cases of the language. This will benefit beginners of the language the most while it can serve anyone at all levels.
 
